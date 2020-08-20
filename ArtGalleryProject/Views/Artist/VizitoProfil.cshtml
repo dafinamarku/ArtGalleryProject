@@ -1,0 +1,121 @@
+﻿@model ArtGalleryProject.Models.IndexViewModel
+@using Microsoft.AspNet.Identity
+@{
+  ViewBag.Title = "VizitoProfil";
+  Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Styles/Profili/Portofolio/responsive.css" rel="stylesheet" />
+<link href="~/Styles/Profili/Portofolio/styles.css" rel="stylesheet" />
+<style>
+
+  img {
+    margin: 5px;
+    padding: 5px;
+  }
+
+  .flex-column {
+    max-width: 260px;
+  }
+</style>
+<br />
+<section>
+  <div class="container">
+    <div class="row">
+      <h4><b>@Model.user.Emri  @Model.user.Mbiemri </b> </h4>
+    </div>
+    <div class="row">
+      <h4><b>EMAIL : </b>@Model.user.Email </h4>
+    </div>
+  </div><!-- container -->
+</section><!-- intro-section -->
+<br />
+<div class="container">
+  <div class="row">
+    @if (Request.IsAuthenticated)
+    {
+      <ul class="list-group list-group-horizontal" style="text-align:center;">
+        <li class="list-group-item list-group-item-action list-group-item-light">
+          <a href="@Url.Action("FollowingFollowers", "Artist", new { tipi="following", id=Model.user.Id })" class="nav-link">
+            <b>Following</b><br /> @Model.nrfollowing
+          </a>
+        </li>
+        <li class="list-group-item list-group-item-action list-group-item-light">
+          <a href="@Url.Action("FollowingFollowers", "Artist", new { tipi="followers", id=Model.user.Id })" class="nav-link">
+            <b>Followers</b><br /> @Model.nrfollowers
+          </a>
+        </li>
+      </ul>
+    }
+  </div>
+  <br />
+  @if (Request.IsAuthenticated)
+  {
+    <div class="row">
+      <div class="col">
+        @if (ViewBag.vizituesi.following.Contains(Model.user))
+        {
+          <a href="@Url.Action("FollowUnfollow", "Artist", new { id=Model.user.Id})" class="btn bg-dark text-white">Unfollow</a>
+        }
+        else
+        {
+          <a href="@Url.Action("FollowUnfollow", "Artist", new { id=Model.user.Id})" class="btn bg-dark text-white">Follow</a>
+        }
+      </div>
+    </div>
+  }
+</div>
+
+<section class="portfolio-section section">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="heading">
+          <h3><b>Veprat</b></h3>
+        </div>
+      </div><!-- col-sm-4 -->
+    </div><!-- row -->
+  </div><!-- container -->
+
+  <div class="portfolioContainer">
+
+    <div class="container">
+      <div class="row">
+        @foreach (var veper in Model.veprat)
+        {
+          <div class="row">
+            <div class="col">
+              <div class="card" style="width: 20rem; border:none">
+                <a href="@Url.Action("Details", "Artworks", new { id=veper.id})">
+                  <img src="~/Content/Imazhe/Veprat/@(veper.fotoEmri)" style="max-width:100%; max-height:500px" class="card-img-top" alt="...">
+                </a>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+
+  </div><!-- portfolioContainer -->
+
+</section><!-- portfolio-section -->
+
+<section class="about-section section">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="heading">
+          <h3><b>Bio</b></h3>
+        </div>
+      </div><!-- col-sm-4 -->
+      <div class="col-sm-8">
+        <p class="margin-b-50">
+          @Model.user.bio
+        </p>
+
+
+      </div><!-- col-sm-8 -->
+    </div><!-- row -->
+  </div><!-- container -->
+</section><!-- about-section -->
+

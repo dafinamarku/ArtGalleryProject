@@ -1,0 +1,37 @@
+﻿@model ArtGalleryProject.Models.Kategoria
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+  <br />
+  <h2>Fshi</h2>
+
+  <h3>Jeni i sigur qe doni ta fshini kete kategori?</h3>
+  <div>
+    <h4>Kategoria</h4>
+    <hr />
+    <dl class="dl-horizontal">
+      <dt>
+        @Html.DisplayNameFor(model => model.kategoria)
+      </dt>
+
+      <dd>
+        @Html.DisplayFor(model => model.kategoria)
+      </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+      @Html.AntiForgeryToken()
+
+      <div class="form-actions no-color">
+        <input type="submit" value="Fshi" class="btn btn-primary" /> |
+        @Html.ActionLink("Kthehu te lista", "Index")
+      </div>
+    }
+  </div>
+
+</div>

@@ -1,0 +1,57 @@
+﻿@model ArtGalleryProject.Models.Artwork
+
+@{
+  ViewBag.Title = "Fshi";
+  Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+  <br />
+  <h2>Fshi</h2>
+
+  <h3 style="color:orangered;">Jeni te sigurt per fshirjen e kesaj vepre?</h3>
+  <div>
+    <br />
+    <div class="row">
+      <div class="col-6">
+        <img src="~/Content/Imazhe/Veprat/@(Model.fotoEmri)" width="500px" style="max-height: 900px" />
+      </div>
+      <div class="col-6">
+        <div class="card">
+          <div class="card-body">
+            <p class="card-title">
+              <h2>@Html.DisplayFor(model => model.titulli)</h2>
+            </p>
+            <p class="card-text">
+              <b>@Html.DisplayNameFor(model => model.kategoriaVepra.kategoria):</b> @Html.DisplayFor(model => model.kategoriaVepra.kategoria) <br />
+              <b>@Html.DisplayNameFor(model => model.subjektiVepra.subjekti):</b> @Html.DisplayFor(model => model.subjektiVepra.subjekti)<br />
+              <b>@Html.DisplayNameFor(model => model.stiliVepra.stiili):</b> @Html.DisplayFor(model => model.stiliVepra.stiili)<br />
+              <hr />
+              <b> @Html.DisplayNameFor(model => model.pershkrimi):</b> <br />
+            </p>
+            @if (Model.pershkrimi == null)
+            {
+              <p style="color:cornflowerblue;">Kjo veper nuk ka pershkrim.</p>
+            }
+            else
+            {
+              <p class="card-text">@Html.DisplayFor(model => model.pershkrimi)</p>
+            }
+            <hr />
+            @using (Html.BeginForm())
+            {
+              @Html.AntiForgeryToken()
+
+              <div class="row justify-content-center">
+                <input type="submit" value="Fshi" class="btn btn-dark" /> &nbsp; &nbsp;
+                @Html.ActionLink("Anullo", "Details", new { id = Model.id }, new { @class = "btn btn-primary" })
+              </div>
+            }
+          </div>
+          </div>
+          <br />
+        </div>
+      </div>
+    </div>
+  
+  </div>
+

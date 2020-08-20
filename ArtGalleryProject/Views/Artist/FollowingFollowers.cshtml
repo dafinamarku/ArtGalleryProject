@@ -1,0 +1,72 @@
+﻿@model ArtGalleryProject.ViewModel.FollowersFollowingViewModel
+@using Microsoft.AspNet.Identity
+@{
+  ViewBag.Title = "FollowingFollowers";
+  Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!-- ne kete rast duhet te shfaqet lista followers -->
+@if (Model.followers != null)
+{
+  <div class="container">
+    <br />
+    <h2>Followers</h2>
+    <hr />
+    <table class="table table-hover">
+      @foreach (var follower in Model.followers)
+      {
+      <tr>
+        <td scope="row">@follower.Emri @follower.Mbiemri</td>
+        @if (User.Identity.GetUserId() != follower.Id)
+        {
+          <td>
+            <a href="@Url.Action("VizitoProfil", "Artist", new { id = follower.Id })">
+              Vizito Profilin
+            </a>
+          </td>
+        }
+        else
+        {
+          <td>
+            <a href="@Url.Action("Index", "Manage", new { id = follower.Id })">
+              Profili im
+            </a>
+          </td>
+        }
+      </tr>
+      }
+    </table>
+  </div>
+}
+else
+{
+  <div class="container">
+    <br />
+    <h2>Following</h2>
+    <hr />
+    <table class="table table-hover">
+      @foreach (var person in Model.following)
+      {
+      <tr>
+        <td scope="row">@person.Emri @person.Mbiemri</td>
+        @if (User.Identity.GetUserId() != person.Id)
+        {
+          <td>
+            <a href="@Url.Action("VizitoProfil", "Artist", new { id = person.Id })">
+                Vizito Profilin
+            </a>
+          </td>
+        }
+        else
+        {
+          <td>
+            <a href="@Url.Action("Index", "Manage", new { id = person.Id })">
+              Profili im
+            </a>
+          </td>
+        }
+      </tr>
+      }
+    </table>
+  </div>
+}
+

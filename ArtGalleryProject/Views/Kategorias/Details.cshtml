@@ -1,0 +1,30 @@
+﻿@model ArtGalleryProject.Models.Kategoria
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+  <br />
+  <h2>Detaje</h2>
+
+  <div>
+    <h4>Kategoria</h4>
+    <hr />
+    <dl class="dl-horizontal">
+      <dt>
+        @Html.DisplayNameFor(model => model.kategoria)
+      </dt>
+
+      <dd>
+        @Html.DisplayFor(model => model.kategoria)
+      </dd>
+
+    </dl>
+  </div>
+  <p>
+    @Html.ActionLink("Edito", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Kthehu te lista", "Index")
+  </p>
+
+</div>

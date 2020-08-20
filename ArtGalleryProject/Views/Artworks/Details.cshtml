@@ -1,0 +1,98 @@
+﻿@model ArtGalleryProject.ViewModel.ArtworkDetails
+@using Microsoft.AspNet.Identity
+@{
+  ViewBag.Title = "Detaje";
+  Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+  <br />
+    <div class="row">
+      <div class="col-6">
+        <img src="~/Content/Imazhe/Veprat/@(Model.vepra.fotoEmri)" width="550px" style="max-height: 900px" />
+      </div>
+      <div class="col-6">
+        <div class="card">
+          <div class="card-body">
+            <p class="card-title">
+              <h2>@Html.DisplayFor(model => model.vepra.titulli)</h2>
+              @if (Request.IsAuthenticated && User.Identity.GetUserId() != Model.vepra.autori.Id)
+              {
+                <h5 style="text-align:right">nga <a href="@Url.Action("VizitoProfil", "Artist", new { id=Model.vepra.autori.Id})">@Html.DisplayFor(model => model.vepra.autori.Emri) @Html.DisplayFor(model => model.vepra.autori.Mbiemri)</a> </h5>
+              }
+              else
+              {
+                <h5 style="text-align:right">nga @Html.DisplayFor(model => model.vepra.autori.Emri) @Html.DisplayFor(model => model.vepra.autori.Mbiemri) </h5>
+              }
+            </p>
+            <p class="card-text">
+              <b>@Html.DisplayNameFor(model => model.vepra.kategoriaVepra.kategoria):</b> @Html.DisplayFor(model => model.vepra.kategoriaVepra.kategoria) <br />
+              <b>@Html.DisplayNameFor(model => model.vepra.subjektiVepra.subjekti):</b> @Html.DisplayFor(model => model.vepra.subjektiVepra.subjekti)<br />
+              <b>@Html.DisplayNameFor(model => model.vepra.stiliVepra.stiili):</b> @Html.DisplayFor(model => model.vepra.stiliVepra.stiili)<br />
+              <hr />
+              <b> @Html.DisplayNameFor(model => model.vepra.pershkrimi):</b> <br />
+            </p>
+              @if (Model.vepra.pershkrimi == null)
+              {
+                <p style="color:cornflowerblue;">Kjo veper nuk ka pershkrim.</p>
+              }
+              else
+              {
+                <p class="card-text">@Html.DisplayFor(model => model.vepra.pershkrimi)</p>
+              }
+            </div>
+        </div>
+        @if (Request.IsAuthenticated)
+        {
+          @Html.AntiForgeryToken();
+          if (User.Identity.GetUserId() == Model.vepra.autori.Id)
+          {
+            <br />
+            <div class="row justify-content-center">
+                @Html.ActionLink("Edito", "Edit", new { id = Model.vepra.id }, new { @class = "btn btn-warning text-white" }) &nbsp;
+                @Html.ActionLink("Fshi", "Delete", new { id = Model.vepra.id }, new { @class = "btn btn-dark" }) 
+            </div>
+          }
+          <br />
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">
+                Komente:
+              </h5>
+              <hr />
+              @if (Model.komenteLike.Count() == 0)
+              {
+                <p class="card-text" style="color:cornflowerblue;">
+                  Kjo veper nuk ka komente.
+                </p>
+              }
+              else
+              {
+                <p class="card-text">
+                  @foreach (var koment in Model.komenteLike)
+                  {
+                    <b>@koment.artisti.Emri @koment.artisti.Mbiemri</b><br />
+                    @koment.koment
+                    <hr />
+                  }
+                </p>
+              }
+              <hr />
+              @using (Html.BeginForm("KomentoVepren", "Artworks", FormMethod.Get))
+              {
+                <div class="form-inline ">
+                  @Html.TextBox("komenti", null, new { vepraId = Model.vepra.id, @class = "form-control", @placeholder = "Komento..." }) &nbsp;
+                  <input type="hidden" value="@Model.vepra.id" name="vepraId" />
+                  <button type="submit" class="btn btn-dark">Komento</button>
+                </div>
+              }
+            </div>
+          </div>
+          <br />
+          <br />
+
+        }
+      </div>
+    </div>
+  </div>
+
+

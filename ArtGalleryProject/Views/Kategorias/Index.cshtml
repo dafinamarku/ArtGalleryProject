@@ -1,0 +1,40 @@
+﻿@model IEnumerable<ArtGalleryProject.Models.Kategoria>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+  <br />
+  <h2>Kategorite</h2>
+  <p>
+    @Html.ActionLink("Krijo te re", "Create")
+  </p>
+  <table class="table">
+    <tr>
+      <th>
+        @Html.DisplayNameFor(model => model.kategoria)
+      </th>
+      <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+      <tr>
+        <td>
+          @Html.DisplayFor(modelItem => item.kategoria)
+        </td>
+        <td>
+          @Html.ActionLink("Edito", "Edit", new { id = item.id }) |
+          @Html.ActionLink("Detaje", "Details", new { id = item.id }) |
+          @Html.ActionLink("Fshi", "Delete", new { id = item.id })
+        </td>
+      </tr>
+    }
+
+  </table>
+
+</div>
+
+

@@ -1,0 +1,154 @@
+﻿@model ArtGalleryProject.ViewModel.HomePageViewModel
+@using Microsoft.AspNet.Identity
+@{
+  ViewBag.Title = "Home Page";
+}
+<style>
+  .card-container {
+    display: flex;
+    flex-wrap: wrap;
+    position:center;
+  }
+
+    .card-container .card {
+      border: solid 1px #f2f2f2;
+      margin: 5px;
+    }
+
+
+      .card-container .card img.card-img {
+        height: 300px;
+        width: 270px;
+        object-fit: cover;
+      }
+</style>
+
+<div class="container" style="text-align:left;">
+  <div class="row">
+
+    <div class="col">
+      <br />
+      <br />
+      @using (Html.BeginForm("Index", "Home", FormMethod.Get))
+      {
+      <div class="form-inline ">
+        @Html.TextBox("kerkimi", null, new { @class = "form-control", @placeholder = "Kerko..." }) &nbsp;&nbsp;
+        <button type="submit" class="btn btn-dark">Kerko</button>
+      </div>
+      }
+    </div>
+  </div>
+  <!--REZULTATET E KERKIMIT-->
+  <div class="row">
+    @if (Model.artistet != null)
+    {
+      <div class="col-4" style="border-right:1px solid">
+        <br />
+        <h5>Artiste:</h5>
+        <br />
+        <table class="table table-hover">
+          @foreach (var artist in Model.artistet)
+          {
+            <tr>
+              <td>
+                @artist.Emri @artist.Mbiemri
+              </td>
+              @if (Request.IsAuthenticated && User.Identity.GetUserId() == artist.Id)
+              {
+                <td><a href="@Url.Action("Index", "Manage")">Profili im</a></td>
+              }
+              else
+              {
+                <td><a href="@Url.Action("VizitoProfil", "Artist", new { id=artist.Id})">Vizito Profilin</a></td>
+              }
+
+            </tr>
+          }
+        </table>
+      </div>
+    }
+    @if (Model.veprat != null)
+    {
+      <div class="col-8">
+        <br />
+        <h5>Vepra:</h5>
+        <div class="row">
+          @foreach (var veper in Model.veprat)
+          {
+            <div class="row">
+              <div class="col" style="margin:20px">
+                <div class="card" style="width: 20rem; padding:5px;">
+                  <img src="~/Content/Imazhe/Veprat/@(veper.fotoEmri)" class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <h5 class="card-title"><b>@veper.titulli</b></h5>
+                    <p class="card-text"><b>Kategoria: </b>@veper.kategoriaVepra.kategoria</p>
+                    <hr />
+                    @Html.ActionLink("Detaje", "Details", "Artworks", new { id = veper.id }, new { @class = "btn btn-dark" })
+                  </div>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+        }
+
+      </div>
+  <!-- FUNDI I REZULTATEVE E KERKIMIT-->
+  <br />
+  <div class="row">
+    <div class="card" style="width: 100%; border:none;">
+      <img src="~/Content/Imazhe/Roy-Nachum-blind-yatzer-12.jpg" class="card-img-top" alt="...">
+    </div>
+  </div>
+
+  <br />
+  <div class="row">
+    <div class="col">
+      <h3>Kategorite:</h3>
+      <ul class="list-group list-inline list-group-horizontal">
+        @foreach (var item in Model.kategorite)
+        {
+          <li class="list-group-item list-group-item-action list-group-item-light">
+            <a href="@Url.Action("Eksploro","Artworks", new { tip="kategori", emri=item})" class="nav-link text-black-50">
+              @item
+            </a>
+          </li>
+        }
+      </ul>
+    </div>
+  </div>
+  <br />
+  <div class="row">
+    <div class="col">
+      <h3>Stilet:</h3>
+      <ul class="list-group list-inline list-group-horizontal">
+        @foreach (var item in Model.stilet)
+        {
+        <li class="list-group-item list-group-item-action list-group-item-light">
+          <a href="@Url.Action("Eksploro", "Artworks", new { tip="stil", emri=item})" class="nav-link text-black-50">
+            @item
+          </a>
+        </li>
+        }
+      </ul>
+    </div>
+  </div>
+  <br />
+  <div class="row">
+    <div class="col">
+      <h3>Subjektet:</h3>
+      <ul class="list-group list-inline list-group-horizontal">
+        @foreach (var item in Model.subjektet)
+        {
+        <li class="list-group-item list-group-item-action list-group-item-light">
+          <a href="@Url.Action("Eksploro", "Artworks", new { tip="subjekt", emri=item})" class="nav-link text-black-50">
+            @item
+          </a>
+        </li>
+        }
+      </ul>
+    </div>
+  </div>
+  <br />
+</div>

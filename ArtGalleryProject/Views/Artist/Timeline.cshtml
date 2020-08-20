@@ -1,0 +1,36 @@
+﻿
+@model IEnumerable<ArtGalleryProject.Models.Artwork>
+@{
+    ViewBag.Title = "Timeline";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+  <br />
+  <h2>Timeline</h2>
+  <br />
+
+  <div class="row">
+    @foreach (ArtGalleryProject.Models.Artwork veper in Model)
+    {  <div class="row">
+        <div class="col" style="margin:20px">
+          <div class="card" style="width: 50rem; padding:5px;">
+            <img src="~/Content/Imazhe/Veprat/@(veper.fotoEmri)" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title"><b>@veper.titulli</b></h5>
+              <p class="card-text">
+                <b>Kategoria: </b>@veper.kategoriaVepra.kategoria<br />
+                <b>Subjekti: </b>@veper.subjektiVepra.subjekti<br />
+                <b>Stili: </b>@veper.stiliVepra.stiili
+              </p>
+              <hr />
+              @Html.ActionLink("Detaje", "Details", "Artworks", new { id = veper.id }, new { @class = "btn btn-dark" })
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+
+</div>
+
