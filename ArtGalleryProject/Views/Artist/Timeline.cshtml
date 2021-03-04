@@ -4,17 +4,19 @@
     ViewBag.Title = "Timeline";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<div class="bg-danger">
+  <br />
+  <h2 class="text-center text-white">Timeline</h2>
+  <br />
+</div>
 <div class="container">
-  <br />
-  <h2>Timeline</h2>
-  <br />
 
-  <div class="row">
+
+  <div class="row justify-content-center">
     @foreach (ArtGalleryProject.Models.Artwork veper in Model)
     {  <div class="row">
         <div class="col" style="margin:20px">
-          <div class="card" style="width: 50rem; padding:5px;">
+          <div class="card" style="width: 50rem; padding:5px; background-color:#f7f5f5">
             <img src="~/Content/Imazhe/Veprat/@(veper.fotoEmri)" class="card-img-top" alt="...">
             <div class="card-body">
               <h5 class="card-title"><b>@veper.titulli</b></h5>

@@ -67,14 +67,17 @@
               }
               else
               {
-                <p class="card-text">
-                  @foreach (var koment in Model.komenteLike)
-                  {
-                    <b>@koment.artisti.Emri @koment.artisti.Mbiemri</b><br />
-                    @koment.koment
-                    <hr />
-                  }
-                </p>
+                <div class="overflow-auto" style="height:100px;">
+                  <p class="card-text">
+                    @foreach (var koment in Model.komenteLike)
+                    {
+                      <b>@koment.artisti.Emri @koment.artisti.Mbiemri</b><br />
+                      @koment.koment
+                      <hr />
+                    }
+                  </p>
+                </div>
+               
               }
               <hr />
               @using (Html.BeginForm("KomentoVepren", "Artworks", FormMethod.Get))
